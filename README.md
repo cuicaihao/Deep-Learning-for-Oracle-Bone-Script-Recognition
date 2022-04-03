@@ -1,6 +1,8 @@
 
 # Oracle-Bone-Script-Recognition: Step by Step Demo
 
+<https://img.shields.io/github/license/cuicaihao/deep-learning-for-oracle-bone-script-recognition>
+
 ==============================
 
 ## Project Background
@@ -30,13 +32,62 @@ I would suggest using [Anaconda](https://www.anaconda.com/) for the installation
 
 ### Step 1: Init the project
 
+Use 'git' command to clone the project from the Github.
+
+```bash
+cd PROJECT_DIR
+git clone https://github.com/cuicaihao/deep-learning-for-oracle-bone-script-recognition 
+# or
+# gh repo clone cuicaihao/deep-learning-for-oracle-bone-script-recognition
+```
+
+Check the project structure.
+
+```bash
+cd deep-learning-for-oracle-bone-script-recognition
+ls -l
+# or 
+# tree -h
+```
+
+You will see an similar structure as the one shown in the end.  Meanwhile you could open the 'Makefile' to see the raw commands of the workflow.
+
+- [Makefile](Makefile)
+
+```bash
+```
+
 ### Step 2: Create the Python Environment and Install the Dependencies
+
+The default setting is to create vitual environment with Python 3.8.
+
+```bash
+make create_environment
+```
+
+Then, we activate the virtual environment.
+
+```bash
+conda activate oracle-bone-script-recognition
+```
+
+Then, we install the dependencies.
+
+```bash
+make requirements
+```
+
+The details of the dependencies are listed in the 'requirements.txt' file.
+
+- [requirements](requirements.txt)
 
 ### Step 3: Download the Raw Data and Preprocess the Data
 
 ### Step 4: Build the Model with Pytorch  
 
 ### Step 5: Test the Model with Qt-GUI
+
+===================================
 
 ### Project Organization
 
