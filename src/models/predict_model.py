@@ -1,9 +1,26 @@
+# -*- coding: utf-8 -*-
+import click
+import logging
+from pathlib import Path
+from dotenv import find_dotenv, load_dotenv
+
 import numpy as np
 import torch
 import pandas as pd
 import torch.nn as nn
 from skimage import transform
 from matplotlib.pylab import plt
+from pathlib import Path
+
+import os
+import sys
+# Ignore warnings
+import warnings
+
+warnings.filterwarnings("ignore")
+# plt.ion()  # interactive mode
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+print(os.path.dirname(os.path.realpath(__file__)))
 
 plt.rcParams['font.family'] = 'Arial Unicode MS'  # enable chinese character
 pd.options.display.float_format = '{:,.8f}'.format
@@ -41,7 +58,7 @@ class Net(nn.Module):
 
 class PredictModel:
 
-    def __init__(self, model_path='model_best.pth', label_path='label.csv'):
+    def __init__(self, model_path='model_best', label_path='label.csv'):
         self.model_path = model_path
         # self.model = torch.load(self.model_path)
         self.model = Net(class_number=793)
@@ -54,15 +71,22 @@ class PredictModel:
         self.image = None
 
     def process_image_np(self, image_path):
-        image_raw = np.load(image_path)
-        image_raw = image_raw[:, :, 0]
+        if type(image_path) == str:
+            if Path(image_path).suffix == '.jpg':
+                image_raw = plt.imread(image_path)
+                image_raw = image_raw[:, :, 0]
+            elif Path(image_path).suffix == '.npy':
+                image_raw = np.load(image_path)
+                image_raw = image_raw[:, :, 0]
+        else:
+            image_raw = image_path[:, :, 0]
         image = transform.resize(image_raw, (40, 40))
         image = image.reshape(1, 1, image.shape[0], image.shape[1])
         image = torch.from_numpy(image).float()
         self.image = image  # update the image
         return image  # return image # torch.tensor
 
-    def predict(self, image_path='test.npy'):
+    def predict(self, image_path):
         image = self.process_image_np(image_path)
         pred = self.model(image)
         pred_label = pred.argmax(dim=1).item()
@@ -70,7 +94,7 @@ class PredictModel:
 
         return pred_label, pred_character
 
-    def predict_top10(self, image_path='test.npy'):
+    def predict_top10(self, image_path):
         image = self.process_image_np(image_path)
         pred = self.model(image)
         prob_dist = torch.sigmoid(pred).detach().numpy()[0]
@@ -87,21 +111,46 @@ class PredictModel:
         plt.show()
 
 
-if __name__ == '__main__':
-    # model_path = './models/model_mlp.pth'
-    model_path = './models/model_best'
-    label_path = './data/processed/label_name.csv'
-    # Debug only
-    image_path = './src/ui/test.npy'
+@click.command()
+@click.argument('input_model_filepath', type=click.Path())
+@click.argument('input_label_name_filepath', type=click.Path())
+@click.argument('input_image_filepath', type=click.Path())
+def main(input_model_filepath, input_label_name_filepath,
+         input_image_filepath):
+    """ Runs data processing scripts to turn raw data from (../raw) into
+        cleaned data ready to be analyzed (saved in ../processed).
+        # model_path = './models/model_best'
+        # label_path = './data/processed/label_name.csv'
+        # image_path = './data/raw/image/3653610.jpg'
+    """
+    logger = logging.getLogger(__name__)
+    logger.info('input_model_filepath: {}'.format(input_model_filepath))
+    logger.info(
+        'input_label_name_filepath: {}'.format(input_label_name_filepath))
+    logger.info('input_image_filepath: {}'.format(input_image_filepath))
+
     # load the model
-    model = PredictModel(model_path, label_path)
+    model = PredictModel(input_model_filepath, input_label_name_filepath)
     # make prediction
-    pred_label, pred_character = model.predict(image_path)
+    pred_label, pred_character = model.predict(input_image_filepath)
     print("\nPredicted Label =", pred_label)
     print("\nChinese Character Label =", model.id2name[pred_label])
     # make top 10 prediction
-    prediction_top_10 = model.predict_top10(image_path)
+    prediction_top_10 = model.predict_top10(input_image_filepath)
     print(prediction_top_10)
     # show the result
     model.show_result(pred_label, pred_character)
     print("Done Test")
+
+
+if __name__ == '__main__':
+    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(level=logging.INFO, format=log_fmt)
+
+    # not used in this stub but often useful for finding various files
+    project_dir = Path(__file__).resolve().parents[2]
+
+    # find .env automagically by walking up directories until it's found, then
+    # load up the .env entries as environment variables
+    load_dotenv(find_dotenv())
+    main()

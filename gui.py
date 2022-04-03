@@ -12,6 +12,7 @@ from PySide6.QtGui import *
 from PySide6.QtCore import *
 import sys
 import numpy as np
+from torch import true_divide
 
 from src.ui.obs_gui import *
 from src.models.predict_model import *
@@ -157,15 +158,8 @@ class MyForm(QMainWindow, Ui_MainWindow):
         self.show()
 
     def translate(self):
-        input_text = self.ui.label_chinese.text()[12:]
-        # print(input_text)
-
-        # output_text = self.translator.translate(input_text)
-        # print(output_text)
-        # if output_text.find('\['):
-        #     output_text = 'Can not find the character'
-        # self.ui.label_english.setText("English: " + output_text)
-        self.ui.label_english.setText(f"English: {output_text}")
+        # TO-DO Chinese to English Translation
+        return
 
     def clean(self):
         self.ui.label_prediction.setText("Prediction ID:")
@@ -176,51 +170,38 @@ class MyForm(QMainWindow, Ui_MainWindow):
             "background-color: lightgrey; border: 1px solid black;")
         self.ui.lineEdit_chinese.setText("")
 
-    def ai_predict(self):
-        # get the image
-        image_path = './test.npy'
-        # make prediction
-        # pred_label, pred_character = self.model.predict(image_path)
-        # print("\nPredicted Label =", pred_label)
-        # print("\nChinese Character Label =", model.id2name[pred_label])
+    def ai_predict(self, image_path):
+
         prediction_top_10 = self.model.predict_top10(image_path)
         print(prediction_top_10)
         return prediction_top_10
-
-        # pred_label = prediction_top_10.iloc[0, 0]
-        # pred_character = prediction_top_10.iloc[0, 1]
-        # pred_prob = prediction_top_10.iloc[0, 2]
-
-        # print(pred_label, pred_character, pred_prob)
-
-        # return pred_label, pred_character, pred_prob
 
     def run(self):
         self.x = self.x + 1
         print("Run Button Clicked {}".format(self.x))
 
         # self.ui.frame_scribble.update()
-        image = self.scribbleArea.image
+        # image = self.scribbleArea.image
         # print(type(image))
         image_np = self.scribbleArea.QImageToCvMat()
         # print(type(image_np), image_np.shape)
 
         # save the image
         # self.scribbleArea.save()
-        with open('test.npy', 'wb') as f:
-            np.save(f, image_np)
+        # with open('test.npy', 'wb') as f:
+        #     np.save(f, image_np)
         # import matplotlib.pylab as plt
         # plt.imshow(image_np)
         # plt.show()
 
-        prediction_top_10 = self.ai_predict()
+        prediction_top_10 = self.ai_predict(image_np)
         top_10_character = prediction_top_10.name.values
 
         self.ui.lineEdit_chinese.setText(' '.join(top_10_character))
 
         pred_label = prediction_top_10.iloc[0, 0]
         pred_character = prediction_top_10.iloc[0, 1]
-        pred_prob = prediction_top_10.iloc[0, 2]
+        pred_prob = prediction_top_10.iloc[0, 3]
 
         self.ui.label_prediction.setText(
             f"Prediction ID: {pred_label} \nAcc: {pred_prob:.8f}")

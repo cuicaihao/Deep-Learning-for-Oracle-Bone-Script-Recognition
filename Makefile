@@ -55,7 +55,7 @@ download_data:
 	rm -rf data/raw/JiaGuWen-master	
 
 ## Make Dataset
-make_dataset: 
+create_dataset: 
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
 
 
@@ -70,6 +70,10 @@ test_dataloader:
 ## Train Model
 train_model: 
 	$(PYTHON_INTERPRETER) src/models/train_model.py data/raw/image data/processed/image_name_label.csv data/processed/label_name.csv models
+
+## Test Model
+test_model:
+	$(PYTHON_INTERPRETER) src/models/predict_model.py models/model_best data/processed/label_name.csv  data/raw/image/3653610.jpg
 
 ## Delete all compiled Python files
 clean:
