@@ -234,6 +234,13 @@ Thank you.
 
 The MIT License (MIT), Copyright (c) 2022, Caihao Cui
 
+## Planning Tasks
+
+- [ ] Enhance the data sample with image transform operations to make the model robust to various input, e.g., rotate image with [-15,15] degrees.
+- [ ] Upgrade the ConvNet model and find better solutions (model structure, loss function, etc).
+- [ ] Upgrade the Chinese-to-English translator, maybe built a Transformer model to translate sentence from chinese to english; Feel free to check my early work on blog [the-annotated-transformer-english-to-chinese-translator](https://cuicaihao.com/the-annotated-transformer-english-to-chinese-translator/).
+- [ ] Upgrade the Input drawing,  adding features of OCR and Character Detection function allow use scanning the large image.
+
 ## Project Organization
 
 ------------
