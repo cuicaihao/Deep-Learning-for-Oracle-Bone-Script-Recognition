@@ -184,7 +184,7 @@ def run_main(root_dir, csv_file, label_name_file, output_dir):
         if avg_vloss < best_vloss:
             best_vloss = avg_vloss
             # model_path = 'model_{}_{}'.format(timestamp, epoch_number)
-            model_path = Path(output_dir) / 'model_best'
+            model_path = Path(output_dir) / 'model_best.pt'
             torch.save(model.state_dict(), str(model_path))
             writer.add_graph(model, vinputs)
         writer.flush()

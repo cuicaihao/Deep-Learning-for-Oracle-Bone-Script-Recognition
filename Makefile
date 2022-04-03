@@ -73,7 +73,7 @@ train_model:
 
 ## Test Model
 test_model:
-	$(PYTHON_INTERPRETER) src/models/predict_model.py models/model_best data/processed/label_name.csv  data/raw/image/3653610.jpg
+	$(PYTHON_INTERPRETER) src/models/predict_model.py models/model_best.pt data/processed/label_name.csv  data/raw/image/3653610.jpg
 
 ## Delete all compiled Python files
 clean:

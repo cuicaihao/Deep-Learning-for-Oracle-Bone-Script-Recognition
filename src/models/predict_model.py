@@ -58,7 +58,7 @@ class Net(nn.Module):
 
 class PredictModel:
 
-    def __init__(self, model_path='model_best', label_path='label.csv'):
+    def __init__(self, model_path='model_best.pt', label_path='label.csv'):
         self.model_path = model_path
         # self.model = torch.load(self.model_path)
         self.model = Net(class_number=793)

@@ -149,7 +149,7 @@ class MyForm(QMainWindow, Ui_MainWindow):
 
         # self.translator = Translator(from_lang="zh-cn", to_lang="english")
 
-        model_path = './models/model_best'
+        model_path = './models/model_best.pt'
         label_path = './data/processed/label_name.csv'
         # load the model
         self.model = PredictModel(model_path, label_path)
