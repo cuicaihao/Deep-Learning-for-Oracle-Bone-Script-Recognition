@@ -54,7 +54,7 @@ You will see an similar structure as the one shown in the end.  Meanwhile you co
 
 ### Step 2: Create the Python Environment and Install the Dependencies
 
-The default setting is to create vitual environment with Python 3.8.
+The default setting is to create virtual environment with Python 3.8.
 
 ```bash
 make create_environment
@@ -115,7 +115,7 @@ Before we build the model, we need to review the image and data loader.
 make image_review
 ```
 
-This step will generate as series of images of the oracle bone script image sample to higlight the features of the images, such as color, height, width. Besides, we show the results of different binarization methods of the original greyscale image with the tool provided by the `scikit-image` package.
+This step will generate a series of images of the oracle bone script image sample to highlight the features of the images, such as color, height, width. Besides, we show the results of different binarization methods of the original greyscale image with the tool provided by the `scikit-image` package.
 
 The source code is located at `src/visualization/visualize.py`.
 
@@ -134,11 +134,11 @@ We can still test the Dataloader with the command.
 make test_dataloader
 ```
 
-This will generate a 8x8 grid-image of the oracle bone script image sample. The source code is located at `src/data/make_dataloader.py`.
+This will generate an 8x8 grid-image of the oracle bone script image sample. The source code is located at `src/data/make_dataloader.py`.
 
 - [src/data/make_dataloader.py](src/data/make_dataloader.py)
 
-In the image below, it generates a batch of 64 image with its label(Chinese charaters) on the top-left conner.
+In the image below, it generates a batch of 64 images with its label(Chinese characters) on the top-left corner.
 
 ![reports/figures/OBS_8x8_Batch.png](reports/figures/OBS_8x8_Batch.png)
 
@@ -161,9 +161,11 @@ tensorboard --logdir=models/runs
 
 Then open the link: <http://localhost:6006/> to monitor the training and validation losses, see the training batch images, and see the model graph.
 
+![OBS_Tensorboard](reports/figures/OBS_TFB.jpg)
+
 - [src/models/train_model.py](src/models/train_model.py)
 
-After the training process, there are one model file named `model_best` in the `models/` directory.
+After the training process, there is one model file named `model_best` in the `models/` directory.
 
 #### 4.4 Test the Model with Sample Image
 
@@ -186,7 +188,7 @@ make test_model
 # 706    706    室      1 0.00000011
 ```
 
-The command will generate a sample figure with predicted label on the top, and a table with the top 10 predicted labels sorted by the probability.
+The command will generate a sample figure with a predicted label on the top, and a table with the top 10 predicted labels sorted by the probability.
 
 ![OBS_PREDICTION](reports/figures/OBS_PREDICTION.png)
 
@@ -204,15 +206,15 @@ python gui.py
 
 ![OBS_GUI_DEMO](reports/figures/OBS_GUI_DEMO.jpg)
 
-The GUI contains a input drawing window for user to scratch the oracle bone script as an image.  
-After the user finish the drawing and click the RUN button. The input image is converted to a tensor (np.array) and feed into the model. The model will predict the label of the input image with probability which are shown on the top of the `Control Panel` of the GUI.
+The GUI contains an input drawing window for user to scratch the oracle bone script as an image.  
+After the user finishes the drawing and clicks the RUN button. The input image is converted to a tensor (np.array) and fed into the model. The model will predict the label of the input image with probability which is shown on the top  `Control Panel` of the GUI.
 
 - Text Label 1: Show the Chinese character label of the input image ID and the Prediction Probability. If the Acc > 0.5, the label background color is green, if the Acc < 0.0001 the label background color is red, otherwise the label background color is yellow.
 
 - Test Label 2: Show the top 10 predicted labels sorted by the probability.
 - **Clean** Button: Clean the input image.
 - **Run** Button: Run the model with the input image.
-- **Translate** Button: (Optional) Translate the Chinese character label to English. I did not find a good Translation service for single character, so I leave this park for future development or the readers to think about it.
+- **Translate** Button: (Optional) Translate the Chinese character label to English. I did not find a good Translation service for single character, so I left this park for future development or the readers to think about it.
 
 ===================================
 
@@ -224,7 +226,7 @@ I think the work is very interesting and I want to share my experience with the 
 
 I will be very grateful if you can share your experience with more readers. If you like this repository, please upvote/star it.
 
-If you find the repository useful, please consider to donate to the Standford Rural Area Education Program (<https://sccei.fsi.stanford.edu/reap/>): Policy change and research to help China's invisible poor.
+If you find the repository useful, please consider donating to the Standford Rural Area Education Program (<https://sccei.fsi.stanford.edu/reap/>): Policy change and research to help China's invisible poor.
 
 Thank you.
 
@@ -285,6 +287,10 @@ The MIT License (MIT), Copyright (c) 2022, Caihao Cui
 
 ### Reference
 
+- [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/)
+- [PyTorch Tutorial](https://pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html)
+- [Qt for Python](https://wiki.qt.io/Qt_for_Python)
 - [Chinese-Traditional-Culture/JiaGuWen](https://github.com/Chinese-Traditional-Culture/JiaGuWen)
+- [Website of the Oracle Bone Script Index](https://chinese-traditional-culture.github.io/JiaGuWen/)
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
