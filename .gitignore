@@ -92,5 +92,7 @@ data/raw/image
 
 # Ignore Runing file.
 models/runs
-models/model_best
+models/*.pt
 test.npy
+# exclude ipynb file only
+!notebooks/*.ipynb
