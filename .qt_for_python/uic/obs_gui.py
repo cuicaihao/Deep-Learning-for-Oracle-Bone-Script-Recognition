@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Oracle Born Script Recognition (v0.9)", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Oracle Bone Script Recognition (v0.9)", None))
         self.groupBox_draw.setTitle(QCoreApplication.translate("MainWindow", u"Input Drawing", None))
         self.groupBox_ctrl.setTitle(QCoreApplication.translate("MainWindow", u"Control Panel", None))
         self.label_prediction.setText(QCoreApplication.translate("MainWindow", u"Prediction", None))

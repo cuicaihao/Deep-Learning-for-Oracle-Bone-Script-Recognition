@@ -23,7 +23,7 @@
             </size>
         </property>
         <property name="windowTitle">
-            <string>Oracle Born Script Recognition (v0.9)</string>
+            <string>Oracle Bone Script Recognition (v0.9)</string>
         </property>
         <widget class="QWidget" name="centralwidget">
             <layout class="QHBoxLayout" name="horizontalLayout">
